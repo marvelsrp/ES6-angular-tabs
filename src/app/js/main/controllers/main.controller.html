@@ -6,5 +6,32 @@
         <div class="col-xs-3 col-centered">
         </div>
     </div>
+    <style>
+        ng-transclude{
+            border: 1px solid red;
+            display: block;
+        }
+        tab{
+            border: 1px solid blue;
+            display: block;
+        }
+        tab-header{
+            display: block;
+        }
+        tab-content{
+            display: block;
+        }
+    </style>
+
+    <tabs tabs-config-attributes>
+        <tab tab-config-attributes>
+            <tab-header>Tab1</tab-header>
+            <tab-content>Tab1 Content</tab-content>
+        </tab>
+        <tab tab-config-attributes>
+            <tab-header>Tab2</tab-header>
+            <tab-content>Tab2 Content</tab-content>
+        </tab>
+    </tabs>
     <myfooter></myfooter>
 </div>
