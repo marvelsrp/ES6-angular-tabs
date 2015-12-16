@@ -3,10 +3,10 @@
 class TabContent {
     constructor($templateCache) {
         this.restrict = 'E';
-        this.scope = true;
         this.require = '^tab';
+        this.transclude = true;
+        this.template = $templateCache.get('main/components/tabs/tab-content/tab-content.directive.html');
     }
-
 
     static createInstance($templateCache) {
         TabContent.instance = new TabContent($templateCache);

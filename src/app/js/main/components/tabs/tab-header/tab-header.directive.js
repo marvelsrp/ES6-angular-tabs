@@ -3,16 +3,17 @@
 class TabHeader {
     constructor($templateCache) {
         this.restrict = 'E';
-        this.scope = true;
         this.require = '^tab';
-
+        this.transclude = true;
+        this.template = $templateCache.get('main/components/tabs/tab-header/tab-header.directive.html');
         this.controller = ['$scope', function ($scope) {
 
-        }];
-    }
-    link(scope, iElement, iAttrs, outerController) {
-        scope.addTab(123);
+                //scope.$parent.addTab(123);
 
+
+
+
+        }];
     }
 
     static createInstance($templateCache) {

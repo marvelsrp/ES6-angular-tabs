@@ -4,6 +4,8 @@ class Tabs {
     constructor($templateCache) {
         this.restrict = 'E';
         this.transclude = true;
+        this.controllerAs = 'tabsComponent';
+        this.bindToController = true;
         this.template = $templateCache.get('main/components/tabs/tabs/tabs.directive.html');
         this.scope = {};
         this.controller = ['$scope', function ($scope) {
@@ -17,8 +19,6 @@ class Tabs {
             }
         }];
     }
-
-    link(scope) {}
 
     static createInstance($templateCache) {
         Tabs.instance = new Tabs($templateCache);
