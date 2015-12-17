@@ -11,19 +11,17 @@ class Tabs {
             $scope.tabs = [];
             $scope.active = 0;
 
-            // слушаем событие в нужном нам $scope
-            $scope.$on('add', function (event, data) {
-                console.log(data); // Данные, которые нам прислали
+
+            $scope.$on('tabs:add', function (event, title) {
+                event.stopPropagation();
+                console.log('Tabs $on add', title);
+                $scope.tabs.push(title);
             });
 
-            this.add = function(t){
-                console.log('addTab', t);
-                $scope.tabs.push(t);
-            };
-
-            $scope.isActive = function(index){
-                return index === $scope.active;
-            };
+            //this.add = function(t){
+            //    console.log('addTab', t);
+            //    $scope.tabs.push(t);
+            //};
 
             $scope.open = function(index){
                 console.log('open', index);
