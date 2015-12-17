@@ -5,15 +5,12 @@ class TabHeader {
         this.restrict = 'E';
         this.require = '^tab';
         this.transclude = true;
-        this.template = $templateCache.get('main/components/tabs/tab-header/tab-header.directive.html');
-        this.controller = ['$scope', function ($scope) {
+    }
 
-                //scope.$parent.addTab(123);
-
-
-
-
-        }];
+    link(scope, element, attrs, TabCtrl, transclude) {
+        transclude(scope, function(clone) {
+            TabCtrl.setTitle(clone.text().trim());
+        });
     }
 
     static createInstance($templateCache) {

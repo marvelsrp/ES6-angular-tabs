@@ -6,10 +6,19 @@ class Tab {
         this.transclude = true;
         this.require = '^tabs';
         this.template = $templateCache.get('main/components/tabs/tab/tab.directive.html');
-        this.scope = true;
         this.controller = ['$scope', function ($scope) {
-            console.log($scope);
+            this.setTitle = function(title){
+                $scope.title = title;
+            };
+            this.isActive = function(){
+
+            }
         }];
+    }
+
+    link(scope, element, attrs, TabsCtrl) {
+        TabsCtrl.add(scope.title);
+        scope.isActive = TabsCtrl.isActive;
     }
 
     static createInstance($templateCache) {
