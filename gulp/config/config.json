@@ -4,7 +4,7 @@
   "url":"http://localhost",
   "appDir": "./src/app",
   "destPathName" : "./dist",
-  "tmp": "./.tmp",
+  "tmp": "./tmp",
   "debug":true,
   "minify":false,
   "freeze": false,
