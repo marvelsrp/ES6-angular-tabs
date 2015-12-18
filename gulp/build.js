@@ -3,11 +3,6 @@
  */
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
-var bowerFiles = require('main-bower-files');
-var nib = require('nib');
-var sourcemaps = require('gulp-sourcemaps');
-var stylus = require('gulp-stylus');
-var gulp = require('gulp');
 var templateCache = require('gulp-angular-templatecache');
 var config = require('./configurationManager').get();
 var del = require('del');
@@ -25,13 +20,6 @@ gulp.task('clean', del.bind(null, [destDir], {force: true}));
 gulp.task('img', function () {
     return gulp.src([appDir + '/img/**/*.*'])
         .pipe(gulp.dest(destDir + '/img/'))
-});
-gulp.task('stylus', function () {
-    return gulp.src([appDir + '/stylus/*.styl'])
-        .pipe(sourcemaps.init())
-        .pipe(stylus({use: nib()}))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(destDir + '/css'));
 });
 gulp.task('css', function () {
     return gulp.src([appDir + '/css/site.css'])

@@ -1,6 +1,3 @@
-/**
- * Created by RobertSabiryanov on 22.06.15.
- */
 var gulp = require('gulp');
 var browserify = require('browserify');
 var watchify = require('watchify');

@@ -1,8 +1,3 @@
-/**
- * Created by rsabiryanov on 18.03.2015.
- */
-'use strict';
-
 var gulp = require('gulp');
 var inject = require('gulp-inject');
 var config = require('./configurationManager').get();

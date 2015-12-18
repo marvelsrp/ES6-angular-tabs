@@ -1,6 +1,3 @@
-/**
- * Created by RobertSabiryanov on 24.06.15.
- */
 var gulp = require('gulp');
 var config = require('./config/config.json');
 

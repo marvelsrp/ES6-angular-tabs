@@ -1,6 +1,3 @@
-/**
- * Created by rsabiryanov on 18.03.2015.
- */
 /** express server & lr & watch **/
 var gulp = require('gulp');
 var path = require('path');
@@ -12,7 +9,6 @@ var config = require('./configurationManager').get();
 var appDir = config.appDir;
 var destPathName = config.destPathName;
 var util = require('gulp-util');
-var runSequence = require('run-sequence');
 
 var tinylr;
 

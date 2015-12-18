@@ -1,6 +1,3 @@
-/**
- * Created by rsabiryanov on 18.03.2015.
- */
 var gulp = require('gulp');
 var bowerFiles = require('main-bower-files');
 var inject = require('gulp-inject');
