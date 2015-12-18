@@ -70,7 +70,7 @@ function debounce(fn, timeout, immediately, context) {
         t = null;
       }, timeout);
     }
-  }
+  };
 }
 
 gulp.task('watch', function (cb) {
@@ -93,7 +93,7 @@ gulp.task('watch', function (cb) {
 
     if (config.livereload) {
       var callNotifyLiveReload = underscore.debounce(function (event) {
-        notifyLiveReload(event)
+        notifyLiveReload(event);
       }, 1000);
       gulp.watch([destPathName + '/js/**/*.js', destPathName + '/js/**/*.html', commonSource + '/ui/**/*.html'], gulpWatchOptions, callNotifyLiveReload);
     }

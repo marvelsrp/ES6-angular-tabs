@@ -10,6 +10,24 @@ var buffer = require('vinyl-buffer');
 var babelify = require("babelify");
 var assign = require('lodash.assign');
 
+function error(a) {
+  gutil.log('Bundle ES6 error'.red, a.toString().red);
+}
+
+function processBundle(bfy, option) {
+  return bfy.on('error', error)
+    .bundle()
+    .on('error', error)
+    .pipe(source(option.bundleName))
+    .pipe(buffer())
+    .pipe(gIf(option.map, sourcemaps.init({loadMaps: true, addComment: false})))
+    .pipe(gIf(option.minify, uglify(option.bundleNameMin, {
+      outSourceMap: option.map
+    })))
+    .pipe(gIf(option.map, sourcemaps.write('./')))
+    .pipe(gulp.dest(option.destPathName));
+}
+
 function bundle(option) {
   var customOpts = {
     debug: option.debug,
@@ -39,22 +57,5 @@ function bundle(option) {
   return processBundle(bfy, option);
 }
 
-function processBundle(bfy, option) {
-  return bfy.on('error', error)
-    .bundle()
-    .on('error', error)
-    .pipe(source(option.bundleName))
-    .pipe(buffer())
-    .pipe(gIf(option.map, sourcemaps.init({loadMaps: true, addComment: false})))
-    .pipe(gIf(option.minify, uglify(option.bundleNameMin, {
-      outSourceMap: option.map
-    })))
-    .pipe(gIf(option.map, sourcemaps.write('./')))
-    .pipe(gulp.dest(option.destPathName));
-}
-
-function error(a) {
-  gutil.log('Bundle ES6 error'.red, a.toString().red);
-}
 
 module.exports = bundle;

@@ -16,10 +16,6 @@ var path = require('path'),
 
 gulp.task('clean', del.bind(null, [destDir], {force: true}));
 
-gulp.task('img', function () {
-  return gulp.src([srcDir + '/img/**/*.*'])
-    .pipe(gulp.dest(destDir + '/img/'))
-});
 gulp.task('scss', function () {
 
   return gulp.src(srcDir + '/scss/fTabs.scss')
@@ -28,10 +24,6 @@ gulp.task('scss', function () {
       outputStyle: 'compressed'
     }))
     .pipe(gulp.dest(destDir + '/css', {overwrite: true}));
-});
-gulp.task('html', function () {
-  return gulp.src([srcDir + '/index.html'])
-    .pipe(gulp.dest(destDir))
 });
 
 gulp.task('templateCache', function () {
@@ -75,4 +67,4 @@ gulp.task('build-es6', function () {
 
 
 
-gulp.task('build', ['img', 'scss', 'html', 'bower_components', 'build-uglify-js']);
+gulp.task('build', ['scss', 'bower_components', 'build-uglify-js']);
