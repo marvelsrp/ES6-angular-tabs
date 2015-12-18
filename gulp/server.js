@@ -1,12 +1,12 @@
 /** express server & lr & watch **/
 var gulp = require('gulp');
 var path = require('path');
-var runSequence = require('run-sequence');
+//var runSequence = require('run-sequence');
 var underscore = require('underscore');
 var configManager = require('./configurationManager');
 var config = require('./configurationManager').get();
 
-var appDir = config.appDir;
+var srcDir = config.srcDir;
 var destPathName = config.destPathName;
 var util = require('gulp-util');
 
@@ -73,7 +73,7 @@ function debounce(fn, timeout, immediately, context) {
 	}
 }
 
-gulp.task('watch', ['injects'], function (cb) {
+gulp.task('watch', function (cb) {
 	if (config.watch) {
 		var debounceDelay = 1000;
 		var gulpWatchOptions = {debounceDelay: debounceDelay};
@@ -87,7 +87,7 @@ gulp.task('watch', ['injects'], function (cb) {
 		}.bind(this);
 
 		console.log('Start watching angular templates');
-		gulp.watch([appDir + '/js/**/*.html'], gulpWatchOptions, startTasks('templateCache'));
+		gulp.watch([srcDir + '/js/**/*.html'], gulpWatchOptions, startTasks('templateCache'));
 		console.log('Start watching common templates');
 		gulp.watch([commonSource + '/ui/**/*.html'], gulpWatchOptions, startTasks('common-template-scripts'));
 
@@ -111,7 +111,7 @@ gulp.task('serve', function (done) {
 		watch: true,
 		livereload: true
 	});
-	runSequence('build', 'express', 'livereload', 'watch', 'open', done);
+	//runSequence('build', 'express', 'livereload', 'watch', 'open', done);
 });
 
 /**********************/

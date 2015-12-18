@@ -1,7 +1,6 @@
 node_modules/
-bower_components/
 .idea/
-dist/
+dist/bower_components/
 npm-debug.log
 /temp
 /tmp
