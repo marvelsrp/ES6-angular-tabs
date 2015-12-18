@@ -1,10 +1,10 @@
 {
-  "name": "es6Angular",
-  "version": "0.0.0",
+  "name": "es6-angular-tabs",
+  "version": "1.0.0",
   "authors": [
-    "RobertSabiryanov <robert.sabiryanov@gmail.com>"
+    "Maksym Bugai <marvelsrp@gmail.com>"
   ],
-  "description": "using Es6 in AngularJs example",
+  "description": "ES 6 angular tabs",
   "moduleType": [
     "es6"
   ],
