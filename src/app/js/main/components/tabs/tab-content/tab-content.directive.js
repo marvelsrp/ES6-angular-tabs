@@ -3,14 +3,17 @@
 class TabContent {
     constructor($templateCache) {
         this.restrict = 'E';
-        this.require = '^tab';
+        //this.require = '^tab';
         this.transclude = true;
         this.template = $templateCache.get('main/components/tabs/tab-content/tab-content.directive.html');
+        this.scope = true;
+        this.controller = ['$scope', function ($scope) {
+            console.log('TabContent');
+        }];
     }
-    //link(scope, element, attrs, TabCtrl) {
-    //    scope.isActive = TabCtrl.isActive;
-    //    console.log('scope.isActive',TabCtrl.isActive());
-    //}
+    link(scope, element, attrs, TabCtrl, transclude) {
+       // scope.isActive = TabCtrl.isActive;
+    }
 
     static createInstance($templateCache) {
         TabContent.instance = new TabContent($templateCache);

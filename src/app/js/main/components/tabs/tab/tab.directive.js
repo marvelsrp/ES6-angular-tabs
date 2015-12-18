@@ -6,27 +6,34 @@ class Tab {
         this.transclude = true;
         this.require = '^tabs';
         this.template = $templateCache.get('main/components/tabs/tab/tab.directive.html');
+        this.scope = true;
         this.controller = ['$scope', function ($scope) {
-            //this.setTitle = function(title){
-            //    $scope.title = title;
-            //};
-            //this.isActive = function(){
-            //
-            //}
-            $scope.$on('tab:header', function (event, title) {
+            console.log('Tab ctrl');
+            $scope.index = undefined;
+            $scope.active = false;
+            $scope.title = undefined;
 
-                event.stopPropagation();
-                console.log('Tab $on header', title);
-               // $scope.$emit('tabs:add', title);
-            });
+            this.setTitle = function(title){
+                $scope.title = title;
+            };
+            $scope.open = function(){
+                $scope.active = true;
+            };
+            $scope.close = function(){
+                $scope.active = false;
+            };
         }];
     }
+    link(scope, element, attrs, TabsCtrl, transclude) {
 
-    //link(scope, element, attrs, TabsCtrl) {
-    //    TabsCtrl.add(scope.title);
-    //    scope.isActive = TabsCtrl.isActive;
-    //}
+        TabsCtrl.add(scope.title, function(index){
+            scope.index = index;
+        }, scope.open, scope.close);
 
+        scope.isActive = function(){
+            return TabsCtrl.isActive(scope.index);
+        }
+    }
     static createInstance($templateCache) {
         Tab.instance = new Tab($templateCache);
         return Tab.instance;

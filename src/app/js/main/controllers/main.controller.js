@@ -12,6 +12,20 @@ class MainController{
         this.init();
     }
     init(){
+        //this.scope.tabs = [
+        //    {
+        //        'title' : 'Title1',
+        //        'content' : 'Content1'
+        //    },
+        //    {
+        //        'title' : 'Title2',
+        //        'content' : 'Content1'
+        //    },
+        //    {
+        //        'title' : 'Title3',
+        //        'content' : 'Content1'
+        //    }
+        //]
     }
 }
 

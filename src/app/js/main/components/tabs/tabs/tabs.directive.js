@@ -5,33 +5,38 @@ class Tabs {
         this.restrict = 'E';
         this.transclude = true;
         this.template = $templateCache.get('main/components/tabs/tabs/tabs.directive.html');
-        this.scope = {};
+        this.scope = true;
         this.controller = ['$scope', function ($scope) {
-
-            $scope.tabs = [];
+            console.log('Tabs');
+            $scope.tabs = {};
             $scope.active = 0;
 
-
-            $scope.$on('tabs:add', function (event, title) {
-                event.stopPropagation();
-                console.log('Tabs $on add', title);
-                $scope.tabs.push(title);
-            });
-
-            //this.add = function(t){
-            //    console.log('addTab', t);
-            //    $scope.tabs.push(t);
-            //};
-
-            $scope.open = function(index){
-                console.log('open', index);
-                if (! $scope.isActive(index)){
-                    $scope.active = index;
+            this.add = function (title, callback, openCallback, closeCallback) {
+                console.log('Tabs.add', title);
+                var index = Object.keys($scope.tabs).length;
+                $scope.tabs[index] = {
+                    title: title,
+                    open: openCallback,
+                    close: closeCallback
+                };
+                if (index == $scope.active){
+                    $scope.tabs[index].open();
                 }
+                callback(index);
+            };
 
-                $scope.$broadcast('open', {
-                    active: $scope.active
-                });
+            $scope.isActive = function(index){
+                return index === $scope.active;
+            };
+
+            $scope.open = function(newIndex){
+                var oldIndex = $scope.active;
+
+                $scope.tabs[oldIndex].close();
+                $scope.tabs[newIndex].open();
+                $scope.active = newIndex;
+
+                $scope.$broadcast('tabs:open', $scope.active);
             }
 
         }];
