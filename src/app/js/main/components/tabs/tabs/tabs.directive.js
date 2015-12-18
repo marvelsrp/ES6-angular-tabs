@@ -7,36 +7,26 @@ class Tabs {
         this.template = $templateCache.get('main/components/tabs/tabs/tabs.directive.html');
         this.scope = true;
         this.controller = ['$scope', function ($scope) {
-            console.log('Tabs');
-            $scope.tabs = {};
+            $scope.tabs = [];
             $scope.active = 0;
 
-            this.add = function (title, callback, openCallback, closeCallback) {
-                console.log('Tabs.add', title);
-                var index = Object.keys($scope.tabs).length;
-                $scope.tabs[index] = {
-                    title: title,
-                    open: openCallback,
-                    close: closeCallback
-                };
-                if (index == $scope.active){
-                    $scope.tabs[index].open();
-                }
-                callback(index);
-            };
 
-            $scope.isActive = function(index){
-                return index === $scope.active;
+            this.add = function (title, callback) {
+                var index = $scope.tabs.length;
+                var item = {
+                    title: title,
+                    active: index == $scope.active
+                };
+                $scope.tabs.push(item);
+                callback(item);
+
             };
 
             $scope.open = function(newIndex){
                 var oldIndex = $scope.active;
-
-                $scope.tabs[oldIndex].close();
-                $scope.tabs[newIndex].open();
+                $scope.tabs[oldIndex].active = false;
+                $scope.tabs[newIndex].active = true;
                 $scope.active = newIndex;
-
-                $scope.$broadcast('tabs:open', $scope.active);
             }
 
         }];

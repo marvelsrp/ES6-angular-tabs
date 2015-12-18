@@ -27,7 +27,7 @@
     <div class="tabs-header">
         <div ng-repeat="tab in tabs track by $index"  class="tabs-title"
              ng-click="open($index)"
-             ng-class="{ 'active': isActive($index)}">{{tab}}</div>
+             ng-class="{ 'active': tab.active}">{{tab.title}}</div>
     </div>
     <ng-transclude></ng-transclude>
 </div>

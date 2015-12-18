@@ -8,7 +8,6 @@ class TabContent {
         this.template = $templateCache.get('main/components/tabs/tab-content/tab-content.directive.html');
         this.scope = true;
         this.controller = ['$scope', function ($scope) {
-            console.log('TabContent');
         }];
     }
     link(scope, element, attrs, TabCtrl, transclude) {

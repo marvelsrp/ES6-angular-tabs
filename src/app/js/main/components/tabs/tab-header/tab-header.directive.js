@@ -1,15 +1,11 @@
 
 
 class TabHeader {
-    constructor($templateCache) {
+    constructor() {
         this.restrict = 'E';
         this.require = '^tab';
         this.transclude = true;
         this.scope = true;
-        this.controller = ['$scope', function ($scope) {
-            console.log('TabHeader Ctrl');
-
-        }];
     }
 
     link(scope, element, attrs, TabCtrl, transclude) {
@@ -24,7 +20,6 @@ class TabHeader {
         return TabHeader.instance;
     }
 }
-TabHeader.createInstance.$inject = ['$templateCache'];
 
 export {TabHeader}
 
