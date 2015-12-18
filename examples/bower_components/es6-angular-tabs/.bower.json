@@ -1,0 +1,40 @@
+{
+  "name": "es6Angular",
+  "authors": [
+    "RobertSabiryanov <robert.sabiryanov@gmail.com>"
+  ],
+  "description": "using Es6 in AngularJs example",
+  "moduleType": [
+    "es6"
+  ],
+  "keywords": [
+    "Es6",
+    "AngularJs",
+    "babel",
+    "browserify"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.2",
+    "angular-ui-router": "~0.2.15",
+    "angular-route": "~1.4.3",
+    "bootstrap": "~3.3.5"
+  },
+  "homepage": "https://github.com/marvelsrp/ES6-angular-tabs",
+  "_release": "8216c3110d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "8216c3110d9018d23bd3a41ccff4eea2d267b1fd"
+  },
+  "_source": "git://github.com/marvelsrp/ES6-angular-tabs.git",
+  "_target": "*",
+  "_originalSource": "es6-angular-tabs"
+}

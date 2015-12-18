@@ -1,10 +1,10 @@
 {
-  "name": "es6-angular-tabs",
-  "version": "1.0.0",
+  "name": "es6Angular",
+  "version": "0.0.0",
   "authors": [
-    "Maksym Bugai <marvelsrp@gmail.com>"
+    "RobertSabiryanov <robert.sabiryanov@gmail.com>"
   ],
-  "description": "ES 6 angular tabs",
+  "description": "using Es6 in AngularJs example",
   "moduleType": [
     "es6"
   ],
@@ -24,7 +24,8 @@
   ],
   "dependencies": {
     "angular": "~1.4.2",
-    "bootstrap": "~3.3.5",
-    "es6-angular-tabs": "*"
+    "angular-ui-router": "~0.2.15",
+    "angular-route": "~1.4.3",
+    "bootstrap": "~3.3.5"
   }
 }

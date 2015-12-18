@@ -1,0 +1,33 @@
+<div>
+    <style>
+        .tabs-header{
+            height: 50px;
+            display: inline-block;
+        }
+        .tabs-title{
+            width: auto;
+            border: 1px solid silver;
+            float:left;
+            height: 50px;
+            min-width: 100px;
+            text-align: center;
+            vertical-align: middle;
+            display: inline-block;
+            line-height: 50px;
+            cursor: pointer;
+        }
+        .tabs-title.active{
+            cursor: default;
+            background: #0086b3;
+        }
+        .tab-header{
+            display: none;
+        }
+    </style>
+    <div class="tabs-header">
+        <div ng-repeat="tab in tabs track by $index"  class="tabs-title"
+             ng-click="open($index)"
+             ng-class="{ 'active': tab.active}">{{tab.title}}</div>
+    </div>
+    <ng-transclude></ng-transclude>
+</div>
