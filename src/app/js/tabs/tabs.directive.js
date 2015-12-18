@@ -4,7 +4,7 @@ class Tabs {
     constructor($templateCache) {
         this.restrict = 'E';
         this.transclude = true;
-        this.template = $templateCache.get('main/components/tabs/tabs/tabs.directive.html');
+        this.template = $templateCache.get('tabs/tabs.directive.html');
         this.scope = true;
         this.controller = ['$scope', function ($scope) {
             $scope.tabs = [];

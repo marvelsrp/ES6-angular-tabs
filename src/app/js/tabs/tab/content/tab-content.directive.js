@@ -3,7 +3,7 @@ class TabContent {
         this.restrict = 'E';
         this.require = '^tab';
         this.transclude = true;
-        this.template = $templateCache.get('main/components/tabs/tab-content/tab-content.directive.html');
+        this.template = $templateCache.get('tabs/tab/content/tab-content.directive.html');
     }
 
     static createInstance($templateCache) {

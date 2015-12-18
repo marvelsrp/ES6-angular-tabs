@@ -3,7 +3,7 @@ class Tab {
         this.restrict = 'E';
         this.transclude = true;
         this.require = '^tabs';
-        this.template = $templateCache.get('main/components/tabs/tab/tab.directive.html');
+        this.template = $templateCache.get('tabs/tab/tab.directive.html');
         this.scope = true;
         this.controller = ['$scope', function ($scope) {
             this.setTitle = function(title){
