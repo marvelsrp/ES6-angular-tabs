@@ -48,7 +48,7 @@ gulp.task('build-es6', function () {
   config.bundleName = 'bundle.js';
   config.bundleNameMin = 'bundle.min.js';
   config.destPathName = destDir + '/js';
-  //config.minify = true;
+  config.minify = true;
   //config.debug = true;
   return bundler(config);
 });

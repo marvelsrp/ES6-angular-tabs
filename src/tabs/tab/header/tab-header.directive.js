@@ -12,7 +12,7 @@ class TabHeader {
       });
     }];
   }
-  static createInstance($compile) {
+  static createInstance() {
     TabHeader.instance = new TabHeader();
     return TabHeader.instance;
   }

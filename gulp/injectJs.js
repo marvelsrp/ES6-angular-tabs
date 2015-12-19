@@ -16,7 +16,7 @@ gulp.task('injectJs', function () {
   var mainTemplates = [destPathName + '/js/templates.js'];
   mainTemplates.injectPlaceholder = 'templates';
 
-  var bundle = [destPathName + '/js/bundle.js'];
+  var bundle = [destPathName + '/js/bundle.min.js'];
   bundle.injectPlaceholder = 'bundle';
 
   return gulp.src(destPathName + '/index.html')
