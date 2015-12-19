@@ -1,1 +1,28 @@
 @import 'tabs/tabs';
+
+html {
+  font-family: "RobotoDraft", "Roboto", sans-serif;
+  overflow-x: hidden;
+  body {
+    background-color: #fafafa;
+    color: #212121;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility
+  }
+}
+code{
+  background: #ccc;
+}
+
+.text-center {
+  text-align: center;
+}
+
+:focus {
+  outline: none
+}
+ul{
+  padding: 0 0 0 20px;
+}
