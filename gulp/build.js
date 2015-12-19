@@ -1,16 +1,13 @@
-
-
 var gulp = require('gulp');
 var templateCache = require('gulp-angular-templatecache');
 var config = require('./configurationManager').get();
 var del = require('del');
-var uglify = require('gulp-uglifyjs');
 var sass = require('gulp-sass');
 var bundler = require('./es6bundler');
+var runSequence = require('run-sequence');
 /** Config variables **/
 var path = require('path'),
   destPathName = config.destPathName,
-  tmpPathName = config.tmp,
   destDir = './' + destPathName,
   srcDir = config.srcDir;
 
@@ -18,53 +15,40 @@ gulp.task('clean', del.bind(null, [destDir], {force: true}));
 
 gulp.task('scss', function () {
 
-  return gulp.src(srcDir + '/scss/fTabs.scss')
+  return gulp.src(srcDir + '/app.scss')
     .pipe(sass({
       errLogToConsole: true,
       outputStyle: 'compressed'
     }))
     .pipe(gulp.dest(destDir + '/css', {overwrite: true}));
 });
+gulp.task('html', function () {
+  return gulp.src([srcDir + '/index.html'])
+    .pipe(gulp.dest(destDir));
+});
 
 gulp.task('templateCache', function () {
-  return gulp.src(srcDir + '/js/**/*.html')
+  return gulp.src(srcDir + '/**/*.html')
     .pipe(templateCache('templates.js', {
-      module: 'main.templates'
+      module: 'app.templates'
     }))
-    .pipe(gulp.dest(tmpPathName + '/js'));
+    .pipe(gulp.dest(destDir + '/js'));
 });
 gulp.task('bower_components', function () {
   return gulp.src([srcDir + '/bower_components/**/*.*'])
-    .pipe(gulp.dest(destDir + '/bower_components/'))
+    .pipe(gulp.dest(destDir + '/bower_components/'));
 });
 
-gulp.task('build-js', ['templateCache', 'build-es6'], function () {
-  console.log(tmpPathName + '/*.js');
-  return gulp.src(tmpPathName + '/js/*.js')
-    .pipe(uglify('fTabs.js', {
-      output: {
-        beautify: true
-      }
-    }))
-    .pipe(gulp.dest(destDir + '/js/'));
-});
-gulp.task('build-uglify-js', ['build-js'], function () {
-  console.log(tmpPathName + '/*.js');
-  return gulp.src(destDir + '/js/*.js')
-    .pipe(uglify('fTabs.min.js', {
-      mangle: false,
-      outSourceMap: true
-    }))
-    .pipe(gulp.dest(destDir + '/js/'));
-});
 gulp.task('build-es6', function () {
-  config.entryPoint = srcDir + '/js/module.js';
-  config.bundleName = 'module.js';
-  config.bundleNameMin = 'module.min.js';
-  config.destPathName = tmpPathName + '/js';
+  config.entryPoint = srcDir + '/app.js';
+  config.bundleName = 'bundle.js';
+  config.bundleNameMin = 'bundle.min.js';
+  config.destPathName = destDir + '/js';
+  //config.minify = true;
+  //config.debug = true;
   return bundler(config);
 });
 
-
-
-gulp.task('build', ['scss', 'bower_components', 'build-uglify-js']);
+gulp.task('build', function (cb) {
+  runSequence(['scss', 'html', 'bower_components', 'build-es6', 'templateCache'], 'injects', cb);
+});

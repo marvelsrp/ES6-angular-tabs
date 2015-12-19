@@ -19,12 +19,20 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "src",
+    "gulp",
+    "tmp",
+    "example",
+    ".bowerrcc",
+    ".gitignore",
+    ".jshintignore",
+    ".jshintrc",
+    "bower.json",
+    "gulpfile.js",
+    "package.json"
   ],
   "dependencies": {
     "angular": "~1.4.2",
-    "bootstrap": "~3.3.5",
-    "es6-angular-tabs": "*"
+    "bootstrap": "~3.3.5"
   }
 }
