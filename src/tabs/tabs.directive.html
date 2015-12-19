@@ -1,8 +1,9 @@
 <div class="tabs">
     <ul class="bar">
         <li ng-repeat="tab in tabsBar track by $index"
-            ng-click="open($index)"
-            ng-class="{ 'active': tab.active()}">{{tab.title()}}
+            ng-click="open(tab.index)"
+            ng-class="{ 'active': tab.active()}">
+            {{tab.title()}}
         </li>
     </ul>
     <ng-transclude></ng-transclude>

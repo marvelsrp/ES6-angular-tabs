@@ -18,13 +18,6 @@ class Tab {
     }];
   }
 
-  //link(scope, element, attrs, TabsCtrl, transclude) {
-  //
-  //  TabsCtrl.add(scope.title, function (tab) {
-  //    scope.tab = tab;
-  //  });
-  //}
-
   static createInstance($templateCache) {
     Tab.instance = new Tab($templateCache);
     return Tab.instance;

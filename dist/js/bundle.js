@@ -50,6 +50,12 @@ var MainController = function MainController($scope, $http, $sce) {
             title: 'New Tab',
             content: '<h1>New Content</h1>'
         },
+        reset: function reset() {
+            this.form = {
+                title: 'New Tab',
+                content: '<h1>New Content</h1>'
+            };
+        },
         add: function add() {
             var index = $scope.tabs.length;
             $scope.tabs[index] = {
@@ -65,6 +71,13 @@ var MainController = function MainController($scope, $http, $sce) {
             title: null,
             content: null
         },
+        reset: function reset() {
+            this.form = {
+                index: $scope.tabs[0].index,
+                title: null,
+                content: null
+            };
+        },
         get: function get() {
             this.form.title = $scope.tabs[this.form.index].title;
             this.form.content = $scope.tabs[this.form.index].content.$$unwrapTrustedValue();
@@ -78,9 +91,30 @@ var MainController = function MainController($scope, $http, $sce) {
         form: {
             index: 0
         },
+        reset: function reset() {
+            this.form = {
+                index: $scope.tabs[0].index
+            };
+        },
         remove: function remove() {
-            delete $scope.tabs[this.form.index];
+            $scope.$broadcast('tabs.remove', this.form.index, function (index) {
+                $scope.tabs.splice(index, 1);
+                $scope.controls.add.reset();
+                $scope.controls.change.reset();
+                $scope.controls.remove.reset();
+                $scope.active = $scope.tabs[0].index;
+            });
         }
+    };
+
+    $scope.onChangeTab = function (newTab, oldTab) {
+        console.info('Change tab from ', oldTab.title(), ' to ', newTab.title());
+    };
+    $scope.onAdd = function (newTab) {
+        console.info('Add new tab', newTab.title());
+    };
+    $scope.onRemove = function (removeTab) {
+        console.info('Remove tab', removeTab.title());
     };
 };
 
@@ -228,13 +262,6 @@ var Tab = (function () {
     }];
   }
 
-  //link(scope, element, attrs, TabsCtrl, transclude) {
-  //
-  //  TabsCtrl.add(scope.title, function (tab) {
-  //    scope.tab = tab;
-  //  });
-  //}
-
   _createClass(Tab, null, [{
     key: 'createInstance',
     value: function createInstance($templateCache) {
@@ -270,29 +297,49 @@ var Tabs = (function () {
     this.template = $templateCache.get('tabs/tabs.directive.html');
     this.scope = {
       active: '=',
-      onInit: '='
+      onChangeTab: '=',
+      onRemove: '=',
+      onAdd: '='
     };
     this.replace = true;
     this.controller = ['$scope', function ($scope) {
-      console.log('tabs init', $scope.active);
       $scope.tabsBar = [];
       $scope.active = $scope.active || 0;
 
-      $scope.$on('tabs.add', function (event, titleFn, callback) {
+      $scope.$on('tabs.add', function (event, titleFn, tabCallback) {
 
         var index = $scope.tabsBar.length;
         var item = {
           title: titleFn,
+          index: index,
           active: function active() {
             return index == $scope.active;
           }
         };
         $scope.tabsBar.push(item);
-        callback(item);
+        tabCallback(item);
+        if (typeof $scope.onAdd == 'function') {
+          $scope.onAdd(item);
+        }
+      });
+
+      $scope.$on('tabs.remove', function (event, index, ctrlCallback) {
+        if (typeof $scope.onRemove == 'function') {
+          $scope.onRemove($scope.tabsBar[index]);
+        }
+        $scope.tabsBar.splice(index, 1);
+        if (typeof ctrlCallback == 'function') {
+          ctrlCallback(index);
+        }
       });
 
       $scope.open = function (newIndex) {
+        var oldIndex = $scope.active;
         $scope.active = newIndex;
+
+        if (typeof $scope.onChangeTab == 'function') {
+          $scope.onChangeTab($scope.tabsBar[newIndex], $scope.tabsBar[oldIndex]);
+        }
       };
     }];
   }

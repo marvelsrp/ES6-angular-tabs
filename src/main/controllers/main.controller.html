@@ -5,7 +5,7 @@
     <div class="controls">
         <div class="col50">
             <div class="form-group">
-                <label>Active Tab:</label> {{tabs[active].title}}
+                <label>Active Tab:</label> {{active}} {{tabs[active].title}}
             </div>
             <div class="form-group">
                 <label>Change Active Tab:</label>
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="form-group">
-        <tabs active="active">
+        <tabs active="active" on-change-tab="onChangeTab" on-add="onAdd" on-remove="onRemove">
             <tab ng-repeat="tab in tabs">
                 <tab-header title="tab.title"></tab-header>
                 <tab-content ng-bind-html="tab.content"></tab-content>

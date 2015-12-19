@@ -5,29 +5,49 @@ class Tabs {
     this.template = $templateCache.get('tabs/tabs.directive.html');
     this.scope = {
       active: '=',
-      onInit: '='
+      onChangeTab: '=',
+      onRemove: '=',
+      onAdd: '='
     };
     this.replace = true;
     this.controller = ['$scope', function ($scope) {
-      console.log('tabs init', $scope.active);
       $scope.tabsBar = [];
       $scope.active = $scope.active || 0;
 
-      $scope.$on('tabs.add', function (event, titleFn, callback) {
+      $scope.$on('tabs.add', function (event, titleFn, tabCallback) {
 
         var index = $scope.tabsBar.length;
         let item = {
           title: titleFn,
-          active: function() {
+          index: index,
+          active: function () {
             return index == $scope.active;
           }
         };
         $scope.tabsBar.push(item);
-        callback(item);
+        tabCallback(item);
+        if (typeof $scope.onAdd == 'function') {
+          $scope.onAdd(item);
+        }
+      });
+
+      $scope.$on('tabs.remove', function (event, index, ctrlCallback) {
+        if (typeof $scope.onRemove == 'function') {
+          $scope.onRemove($scope.tabsBar[index]);
+        }
+        $scope.tabsBar.splice(index, 1);
+        if (typeof ctrlCallback == 'function') {
+          ctrlCallback(index);
+        }
       });
 
       $scope.open = function (newIndex) {
+        var oldIndex = $scope.active;
         $scope.active = newIndex;
+
+        if (typeof $scope.onChangeTab == 'function') {
+          $scope.onChangeTab($scope.tabsBar[newIndex], $scope.tabsBar[oldIndex]);
+        }
       }
 
     }];
