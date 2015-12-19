@@ -1,5 +1,5 @@
 class MainController{
-    constructor($scope, $http, $sce){
+    constructor($scope, $http, $sce, $log){
         $scope.title = "ES6 Angular Tabs";
         $scope.active = 0;
         $scope.tabs = [];
@@ -81,18 +81,18 @@ class MainController{
         };
 
         $scope.onChangeTab = function(newTab, oldTab){
-            console.info('Change tab from ', oldTab.title(),' to ', newTab.title());
+            $log.info('Change tab from ', oldTab.title(),' to ', newTab.title());
         };
         $scope.onAdd = function(newTab){
-            console.info('Add new tab', newTab.title());
+            $log.info('Add new tab', newTab.title());
         };
         $scope.onRemove = function(removeTab){
-            console.info('Remove tab', removeTab.title());
+            $log.info('Remove tab', removeTab.title());
         };
 
     }
 }
 
-MainController.$inject=['$scope','$http','$sce'];
+MainController.$inject=['$scope','$http','$sce','$log'];
 
 export {MainController}
