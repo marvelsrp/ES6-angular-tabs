@@ -1,0 +1,42 @@
+{
+  "indent": 2,
+  "undef": true,
+  "quotmark": "single",
+  "maxlen": 80,
+  "trailing": true,
+  "curly": true,
+  "globalstrict": false,
+  "jasmine": true,
+  "browser": true,
+  "unused": true,
+  "devel": true,
+  "globals": {
+    "describe": false,
+      "xdescribe": false,
+      "ddescribe": false,
+      "it": false,
+      "xit": false,
+      "iit": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "expect": false,
+      "pending": false,
+      "spyOn": false
+  },
+  "predef": [ // Extra globals.
+    "jasmine",
+    "angular",
+    "define",
+    "require",
+    "exports",
+    "module",
+    "describe",
+    "before",
+    "beforeEach",
+    "after",
+    "afterEach",
+    "it",
+    "inject",
+    "expect"
+  ]
+}

@@ -1,17 +1,18 @@
 module.exports = function (config) {
   config.set({
-    basePath: './',
+    basePath: '',
     files: [
-      'dist/js/vendors.min.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'app/**/*.js',
+      'dist/bower_components/angular/angular.min.js',
+      'dist/js/bundle.min.js',
+      'dist/js/templates.js',
+      'src/**/.spec.js',
       // fixtures
-      {pattern: 'app/**/**/**/*.json', included: false}
+      {pattern: 'dist/mock/**/*.json', included: false}
     ],
     exclude: [],
     preprocessors: {
      // 'app/**/**/**/*.json'   : ['json_fixtures'],
-      'fixtures/*.json': ['json_fixtures']
+     // 'fixtures/*.json': ['json_fixtures']
     },
     jsonFixturesPreprocessor: {
       variableName: '__json__'
@@ -28,8 +29,7 @@ module.exports = function (config) {
     ],
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine',
-      'karma-fixture'
+      'karma-jasmine'
     ],
     captureTimeout: 60000,
     singleRun: false
