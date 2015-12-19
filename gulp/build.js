@@ -26,6 +26,10 @@ gulp.task('html', function () {
   return gulp.src([srcDir + '/index.html'])
     .pipe(gulp.dest(destDir));
 });
+gulp.task('mock', function () {
+  return gulp.src([srcDir + '/**/*.json'])
+    .pipe(gulp.dest(destDir + '/mock'));
+});
 
 gulp.task('templateCache', function () {
   return gulp.src(srcDir + '/**/*.html')
@@ -50,5 +54,5 @@ gulp.task('build-es6', function () {
 });
 
 gulp.task('build', function (cb) {
-  runSequence(['scss', 'html', 'bower_components', 'build-es6', 'templateCache'], 'injects', cb);
+  runSequence(['scss', 'html', 'mock', 'bower_components', 'build-es6', 'templateCache'], 'injects', cb);
 });

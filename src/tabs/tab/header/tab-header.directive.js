@@ -3,17 +3,15 @@ class TabHeader {
     this.restrict = 'E';
     this.require = '^tab';
     this.transclude = true;
+    this.scope = {
+      title: '='
+    };
+    this.link = function(scope, element, attrs, TabCtrl, transclude) {
+      TabCtrl.setTitle(scope.title);
+    }
   }
-
-  link(scope, element, attrs, TabCtrl, transclude) {
-    transclude(scope, function (clone) {
-      var title = clone.text().trim();
-      TabCtrl.setTitle(title);
-    });
-  }
-
-  static createInstance($templateCache) {
-    TabHeader.instance = new TabHeader($templateCache);
+  static createInstance($compile) {
+    TabHeader.instance = new TabHeader();
     return TabHeader.instance;
   }
 }

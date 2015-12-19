@@ -16,34 +16,39 @@ var _mainModuleJs = require('./main/module.js');
 var _mainModuleJs2 = _interopRequireDefault(_mainModuleJs);
 
 },{"./main/module.js":3,"./modules.js":4,"./tabs/module.js":5}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var MainController = function MainController($scope, $http, $sce) {
+    _classCallCheck(this, MainController);
 
-var MainController = (function () {
-    function MainController($scope) {
-        _classCallCheck(this, MainController);
+    $scope.title = "ES6 Angular Tabs";
+    $scope.active = 1;
+    $scope.tabs = [];
+    $http({
+        method: 'GET',
+        url: '/mock/main/controllers/main.controller.mock.json'
+    }).then(function successCallback(response) {
+        for (var i = 0; i < response.data.length; i++) {
+            $scope.tabs[i] = {
+                title: response.data[i].title,
+                content: $sce.trustAsHtml(response.data[i].content)
+            };
+        }
+    });
 
-        this.scope = $scope;
-        this.scope.Text = "ES6 Angular Tabs";
-        this.init();
-    }
+    $scope.onInitTabs = function (tabs) {
+        //$scope.tabs = tabs;
+        console.log(tabs);
+    };
+};
 
-    _createClass(MainController, [{
-        key: "init",
-        value: function init() {}
-    }]);
-
-    return MainController;
-})();
-
-MainController.$inject = ['$scope'];
+MainController.$inject = ['$scope', '$http', '$sce'];
 
 exports.MainController = MainController;
 
@@ -88,20 +93,24 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var TabContent = (function () {
-  function TabContent($templateCache) {
+  function TabContent($templateCache, $sce) {
     _classCallCheck(this, TabContent);
 
     this.restrict = 'E';
     this.require = '^tab';
     this.transclude = true;
     this.replace = true;
+    this.scope = true;
+    //this.controller = ['$scope', '$sce', function ($scope, $sce) {
+    //  //$scope.contentHTML = $sce.trustAsHtml($scope.content);
+    //}];
     this.template = $templateCache.get('tabs/tab/content/tab-content.directive.html');
   }
 
   _createClass(TabContent, null, [{
     key: 'createInstance',
-    value: function createInstance($templateCache) {
-      TabContent.instance = new TabContent($templateCache);
+    value: function createInstance($templateCache, $sce) {
+      TabContent.instance = new TabContent($templateCache, $sce);
       return TabContent.instance;
     }
   }]);
@@ -109,7 +118,7 @@ var TabContent = (function () {
   return TabContent;
 })();
 
-TabContent.createInstance.$inject = ['$templateCache'];
+TabContent.createInstance.$inject = ['$templateCache', '$sce'];
 
 exports.TabContent = TabContent;
 
@@ -131,20 +140,18 @@ var TabHeader = (function () {
     this.restrict = 'E';
     this.require = '^tab';
     this.transclude = true;
+    this.scope = {
+      title: '='
+    };
+    this.link = function (scope, element, attrs, TabCtrl, transclude) {
+      TabCtrl.setTitle(scope.title);
+    };
   }
 
-  _createClass(TabHeader, [{
-    key: 'link',
-    value: function link(scope, element, attrs, TabCtrl, transclude) {
-      transclude(scope, function (clone) {
-        var title = clone.text().trim();
-        TabCtrl.setTitle(title);
-      });
-    }
-  }], [{
+  _createClass(TabHeader, null, [{
     key: 'createInstance',
-    value: function createInstance($templateCache) {
-      TabHeader.instance = new TabHeader($templateCache);
+    value: function createInstance($compile) {
+      TabHeader.instance = new TabHeader();
       return TabHeader.instance;
     }
   }]);
@@ -217,24 +224,28 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var Tabs = (function () {
-  function Tabs($templateCache) {
+  function Tabs($templateCache, $compile) {
     _classCallCheck(this, Tabs);
 
     this.restrict = 'E';
     this.transclude = true;
     this.template = $templateCache.get('tabs/tabs.directive.html');
-    this.scope = true;
+    this.scope = {
+      active: '=',
+      onInit: '='
+    };
     this.replace = true;
     this.controller = ['$scope', function ($scope) {
       console.log('tabs init');
       $scope.tabs = [];
-      $scope.active = 0;
+      $scope.active = $scope.active || 0;
 
       this.add = function (title, callback) {
         var index = $scope.tabs.length;
         var item = {
           title: title,
-          active: index == $scope.active
+          active: index == $scope.active,
+          index: index
         };
         $scope.tabs.push(item);
         callback(item);
@@ -249,10 +260,22 @@ var Tabs = (function () {
     }];
   }
 
-  _createClass(Tabs, null, [{
+  _createClass(Tabs, [{
+    key: 'link',
+    value: function link(scope, element, attrs, TabsCtrl, transclude) {
+
+      scope.onInit({
+        tabs: scope.tabs,
+        active: scope.active,
+        count: scope.tabs.length - 1,
+        open: scope.open,
+        close: scope.add
+      });
+    }
+  }], [{
     key: 'createInstance',
-    value: function createInstance($templateCache) {
-      Tabs.instance = new Tabs($templateCache);
+    value: function createInstance($templateCache, $compile) {
+      Tabs.instance = new Tabs($templateCache, $compile);
       return Tabs.instance;
     }
   }]);
@@ -260,7 +283,7 @@ var Tabs = (function () {
   return Tabs;
 })();
 
-Tabs.createInstance.$inject = ['$templateCache'];
+Tabs.createInstance.$inject = ['$templateCache', '$compile'];
 
 exports.Tabs = Tabs;
 
