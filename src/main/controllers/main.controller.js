@@ -1,7 +1,7 @@
 class MainController{
     constructor($scope){
         this.scope = $scope;
-        this.scope.Text = "Hello, man!";
+        this.scope.Text = "ES6 Angular Tabs";
         this.init();
     }
     init(){

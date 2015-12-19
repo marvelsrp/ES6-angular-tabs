@@ -31,7 +31,7 @@ var MainController = (function () {
         _classCallCheck(this, MainController);
 
         this.scope = $scope;
-        this.scope.Text = "Hello, man!";
+        this.scope.Text = "ES6 Angular Tabs";
         this.init();
     }
 
