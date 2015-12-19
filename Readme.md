@@ -1,9 +1,9 @@
 # es6Angular
-Приложение, демонстрирующее использование кода ES6 в рамках приложения AngularJs 1.x
+Приложение, демонстрирующее использование кода ES6 в рамках приложения AngularJs 1.x для создания навигационных закладок
 
 #Setup
-- `git clone git@github.com:SRobertZ/es6angular.git`
-- `cd es6Angular`
+- `git clone git@github.com:marvelsrp/ES6-angular-tabs.git`
+- `cd ES6-angular-tabs`
 - `npm install -g gulp`
 - `npm install -g bower`
 - `npm install`
