@@ -88,14 +88,16 @@ gulp.task('watch', function (cb) {
 
     console.log('Start watching angular templates');
     gulp.watch([srcDir + '/**/*.html'], gulpWatchOptions, startTasks('templateCache'));
-    console.log('Start watching common templates');
-    gulp.watch([commonSource + '/ui/**/*.html'], gulpWatchOptions, startTasks('common-template-scripts'));
+
+    console.log('Start watching styles');
+    gulp.watch([srcDir + '/**/*.scss'], gulpWatchOptions, startTasks('scss'));
+
 
     if (config.livereload) {
       var callNotifyLiveReload = underscore.debounce(function (event) {
         notifyLiveReload(event);
       }, 1000);
-      gulp.watch([destPathName + '/**/*.js', destPathName + '/**/*.html', commonSource + '/ui/**/*.html'], gulpWatchOptions, callNotifyLiveReload);
+      gulp.watch([destPathName + '/**/*.js', destPathName + '/**/*.css', destPathName + '/**/*.html'], gulpWatchOptions, callNotifyLiveReload);
     }
   }
 

@@ -1,9 +1,9 @@
-<div>
-    <div class="tabs-header">
-        <div ng-repeat="tab in tabs track by $index" class="tabs-title"
-             ng-click="open($index)"
-             ng-class="{ 'active': tab.active}">{{tab.title}}
-        </div>
-    </div>
+<div class="tabs">
+    <ul class="bar">
+        <li ng-repeat="tab in tabs track by $index"
+            ng-click="open($index)"
+            ng-class="{ 'active': tab.active}">{{tab.title}}
+        </li>
+    </ul>
     <ng-transclude></ng-transclude>
 </div>

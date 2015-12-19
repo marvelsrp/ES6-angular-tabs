@@ -1,41 +1,56 @@
-.tabs-header {
-  height: 50px;
-  display: inline-block;
+$height: 50px;
+$color-hover: #2b669a;
+$color-default: black;
+$color-active: #4c9fff;
+$border-color: #ddd;
+
+.tabs {
+  ul.bar {
+    height: $height;
+    display: inline-block;
+    border-bottom: 1px solid $border-color;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    > li {
+      position: relative;
+      display: block;
+      float: left;
+      color: $color-default;
+      min-width: 100px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: $height;
+      height: $height;
+      cursor: pointer;
+      text-transform: uppercase;
+      &:hover {
+        color: $color-hover;
+        &.active {
+          color: $color-active;
+        }
+      }
+      &.active {
+        cursor: default;
+        border-top: 1px solid $border-color;
+        border-left: 1px solid $border-color;
+        border-right: 1px solid $border-color;
+        margin-bottom: 1px;
+        background: white;
+      }
+    }
+  }
+
+  .content{
+    margin: -6px 0 0 0;
+    border-bottom: 1px solid $border-color;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    min-height: 50vh;
+    padding: 10px 10px 10px 20px;
+  }
+  ng-transclude{
+    display: block;
+  }
 }
 
-.tabs-title {
-  width: auto;
-  border: 1px solid silver;
-  float: left;
-  height: 50px;
-  min-width: 100px;
-  text-align: center;
-  vertical-align: middle;
-  display: inline-block;
-  line-height: 50px;
-  cursor: pointer;
-}
-
-.tabs-title.active {
-  cursor: default;
-  background: #0086b3;
-}
-
-.tab-header {
-  display: none;
-}
-ng-transclude {
-  display: block;
-}
-
-tab {
-  display: block;
-}
-
-tab-header {
-  display: block;
-}
-
-tab-content {
-  display: block;
-}

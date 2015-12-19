@@ -94,6 +94,7 @@ var TabContent = (function () {
     this.restrict = 'E';
     this.require = '^tab';
     this.transclude = true;
+    this.replace = true;
     this.template = $templateCache.get('tabs/tab/content/tab-content.directive.html');
   }
 
@@ -173,6 +174,7 @@ var Tab = (function () {
     this.require = '^tabs';
     this.template = $templateCache.get('tabs/tab/tab.directive.html');
     this.scope = true;
+    this.replace = true;
     this.controller = ['$scope', function ($scope) {
       this.setTitle = function (title) {
         $scope.title = title;
@@ -222,6 +224,7 @@ var Tabs = (function () {
     this.transclude = true;
     this.template = $templateCache.get('tabs/tabs.directive.html');
     this.scope = true;
+    this.replace = true;
     this.controller = ['$scope', function ($scope) {
       console.log('tabs init');
       $scope.tabs = [];

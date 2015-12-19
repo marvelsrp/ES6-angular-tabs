@@ -4,6 +4,7 @@ class Tabs {
     this.transclude = true;
     this.template = $templateCache.get('tabs/tabs.directive.html');
     this.scope = true;
+    this.replace = true;
     this.controller = ['$scope', function ($scope) {
       console.log('tabs init');
       $scope.tabs = [];

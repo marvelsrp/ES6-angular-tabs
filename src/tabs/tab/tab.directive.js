@@ -5,6 +5,7 @@ class Tab {
     this.require = '^tabs';
     this.template = $templateCache.get('tabs/tab/tab.directive.html');
     this.scope = true;
+    this.replace = true;
     this.controller = ['$scope', function ($scope) {
       this.setTitle = function (title) {
         $scope.title = title;
