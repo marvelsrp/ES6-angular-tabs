@@ -1,0 +1,61 @@
+$height: 50px;
+$color-hover: #2b669a;
+$color-default: black;
+$color-active: #4c9fff;
+
+.tabs {
+  ul.bar {
+    height: $height;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    > li {
+      position: relative;
+      display: block;
+      float: left;
+      color: $color-default;
+      min-width: 100px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: $height;
+      height: $height;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 18px;
+      padding: 0 10px;
+
+      -webkit-transition: color 0.3s ease-in-out;
+      -moz-transition: color 0.3s ease-in-out;
+      -o-transition: color 0.3s ease-in-out;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: $color-active;
+      }
+      &.active {
+        cursor: default;
+        color: $color-active;
+        border-bottom: 3px solid $color-active;
+        margin-bottom: 1px;
+        background: white;
+      }
+    }
+  }
+
+  .content{
+    margin: -6px 0 0 0;
+    min-height: 50vh;
+    padding: 10px 10px 10px 20px;
+
+  }
+  ng-transclude{
+    display: block;
+  }
+}
+
+.controls{
+  .col50{
+    width: 50%;
+    float:left;
+  }
+}

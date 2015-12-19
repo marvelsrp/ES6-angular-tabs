@@ -2,17 +2,52 @@
     <div class="row text-center">
         <h1>{{title}}</h1>
     </div>
-    <div class="row">
-        Active Tab: {{active | json}} {{tabs.active | json}}
-        <!--ng-change="tabs.open(tabs.active)"-->
-        <!--<select ng-model="active"-->
+    <div class="controls">
+        <div class="col50">
+            <div class="form-group">
+                <label>Active Tab:</label> {{tabs[active].title}}
+            </div>
+            <div class="form-group">
+                <label>Change Active Tab:</label>
+                <select ng-model="active"
+                        ng-options="tab.index as tab.title for tab in tabs"></select>
+            </div>
+            <div class="form-group">
+                <label>Change Title and Content:</label>
+                <select ng-model="controls.change.form.index"
+                        ng-options="tab.index as tab.title for tab in tabs"></select>
+                <button ng-click="controls.change.get()">Get</button>
+                    <input type="text" class="form-control"
+                           placeholder="Title"
+                           ng-model="controls.change.form.title" >
+                    <textarea ng-model="controls.change.form.content"
+                              placeholder="Content"
+                              type="text" class="form-control"></textarea>
+                <button ng-click="controls.change.save()">Save</button>
+            </div>
+        </div>
+        <div class="col50">
+            <div class="form-group">
+                <label>Add Tab:</label>
+                <input ng-model="controls.add.form.title"
+                       placeholder="Title"
+                       type="text" class="form-control" >
+                <textarea ng-model="controls.add.form.content"
+                          placeholder="Content"
+                          type="text" class="form-control"></textarea>
+                <button ng-click="controls.add.add()">Add Tab</button>
+            </div>
+            <div class="form-group">
+                <label>Remove Tab:</label>
+                <select ng-model="controls.remove.form.index"
+                        ng-options="tab.index as tab.title for tab in tabs"></select>
+                <button ng-click="controls.remove.remove()">Remove</button>
+            </div>
 
-                <!--ng-options="tab in tabs.tabs track by $index"-->
-        <!--&gt;</select>-->
-        <button >getContext</button>
+        </div>
     </div>
-    <div class="row">
-        <tabs active="active" on-init="onInitTabs">
+    <div class="form-group">
+        <tabs active="active">
             <tab ng-repeat="tab in tabs">
                 <tab-header title="tab.title"></tab-header>
                 <tab-content ng-bind-html="tab.content"></tab-content>

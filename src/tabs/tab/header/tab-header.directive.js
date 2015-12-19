@@ -6,9 +6,11 @@ class TabHeader {
     this.scope = {
       title: '='
     };
-    this.link = function(scope, element, attrs, TabCtrl, transclude) {
-      TabCtrl.setTitle(scope.title);
-    }
+    this.controller = ['$scope', function ($scope) {
+      $scope.$emit('tab.add', function(){
+        return $scope.title;
+      });
+    }];
   }
   static createInstance($compile) {
     TabHeader.instance = new TabHeader();

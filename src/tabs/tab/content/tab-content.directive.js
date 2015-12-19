@@ -5,9 +5,6 @@ class TabContent {
     this.transclude = true;
     this.replace = true;
     this.scope = true;
-    //this.controller = ['$scope', '$sce', function ($scope, $sce) {
-    //  //$scope.contentHTML = $sce.trustAsHtml($scope.content);
-    //}];
     this.template = $templateCache.get('tabs/tab/content/tab-content.directive.html');
   }
 

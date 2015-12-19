@@ -9,40 +9,28 @@ class Tabs {
     };
     this.replace = true;
     this.controller = ['$scope', function ($scope) {
-      console.log('tabs init');
-      $scope.tabs = [];
+      console.log('tabs init', $scope.active);
+      $scope.tabsBar = [];
       $scope.active = $scope.active || 0;
 
-      this.add = function (title, callback) {
-        var index = $scope.tabs.length;
-        var item = {
-          title: title,
-          active: index == $scope.active,
-          index: index,
+      $scope.$on('tabs.add', function (event, titleFn, callback) {
+
+        var index = $scope.tabsBar.length;
+        let item = {
+          title: titleFn,
+          active: function() {
+            return index == $scope.active;
+          }
         };
-        $scope.tabs.push(item);
+        $scope.tabsBar.push(item);
         callback(item);
-      };
+      });
 
       $scope.open = function (newIndex) {
-        var oldIndex = $scope.active;
-        $scope.tabs[oldIndex].active = false;
-        $scope.tabs[newIndex].active = true;
         $scope.active = newIndex;
       }
 
     }];
-  }
-
-  link(scope, element, attrs, TabsCtrl, transclude) {
-
-    scope.onInit({
-      tabs: scope.tabs,
-      active: scope.active,
-      count: scope.tabs.length - 1,
-      open: scope.open,
-      close: scope.add
-    });
   }
 
   static createInstance($templateCache, $compile) {

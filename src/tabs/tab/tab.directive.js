@@ -6,19 +6,24 @@ class Tab {
     this.template = $templateCache.get('tabs/tab/tab.directive.html');
     this.scope = true;
     this.replace = true;
+
     this.controller = ['$scope', function ($scope) {
-      this.setTitle = function (title) {
-        $scope.title = title;
-      };
+
+      $scope.$on('tab.add', function (event, titleFn) {
+        $scope.$emit('tabs.add', titleFn, function(tab){
+          $scope.tab = tab;
+        });
+      });
+
     }];
   }
 
-  link(scope, element, attrs, TabsCtrl, transclude) {
-
-    TabsCtrl.add(scope.title, function (tab) {
-      scope.tab = tab;
-    });
-  }
+  //link(scope, element, attrs, TabsCtrl, transclude) {
+  //
+  //  TabsCtrl.add(scope.title, function (tab) {
+  //    scope.tab = tab;
+  //  });
+  //}
 
   static createInstance($templateCache) {
     Tab.instance = new Tab($templateCache);

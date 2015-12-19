@@ -28,23 +28,59 @@ var MainController = function MainController($scope, $http, $sce) {
     _classCallCheck(this, MainController);
 
     $scope.title = "ES6 Angular Tabs";
-    $scope.active = 1;
+    $scope.active = 0;
     $scope.tabs = [];
+
     $http({
         method: 'GET',
         url: '/mock/main/controllers/main.controller.mock.json'
     }).then(function successCallback(response) {
         for (var i = 0; i < response.data.length; i++) {
             $scope.tabs[i] = {
+                index: i,
                 title: response.data[i].title,
                 content: $sce.trustAsHtml(response.data[i].content)
             };
         }
     });
 
-    $scope.onInitTabs = function (tabs) {
-        //$scope.tabs = tabs;
-        console.log(tabs);
+    $scope.controls = {};
+    $scope.controls.add = {
+        form: {
+            title: 'New Tab',
+            content: '<h1>New Content</h1>'
+        },
+        add: function add() {
+            var index = $scope.tabs.length;
+            $scope.tabs[index] = {
+                index: index,
+                title: this.form.title,
+                content: $sce.trustAsHtml(this.form.content)
+            };
+        }
+    };
+    $scope.controls.change = {
+        form: {
+            index: 0,
+            title: null,
+            content: null
+        },
+        get: function get() {
+            this.form.title = $scope.tabs[this.form.index].title;
+            this.form.content = $scope.tabs[this.form.index].content.$$unwrapTrustedValue();
+        },
+        save: function save() {
+            $scope.tabs[this.form.index].title = this.form.title;
+            $scope.tabs[this.form.index].content = $sce.trustAsHtml(this.form.content);
+        }
+    };
+    $scope.controls.remove = {
+        form: {
+            index: 0
+        },
+        remove: function remove() {
+            delete $scope.tabs[this.form.index];
+        }
     };
 };
 
@@ -101,9 +137,6 @@ var TabContent = (function () {
     this.transclude = true;
     this.replace = true;
     this.scope = true;
-    //this.controller = ['$scope', '$sce', function ($scope, $sce) {
-    //  //$scope.contentHTML = $sce.trustAsHtml($scope.content);
-    //}];
     this.template = $templateCache.get('tabs/tab/content/tab-content.directive.html');
   }
 
@@ -143,9 +176,11 @@ var TabHeader = (function () {
     this.scope = {
       title: '='
     };
-    this.link = function (scope, element, attrs, TabCtrl, transclude) {
-      TabCtrl.setTitle(scope.title);
-    };
+    this.controller = ['$scope', function ($scope) {
+      $scope.$emit('tab.add', function () {
+        return $scope.title;
+      });
+    }];
   }
 
   _createClass(TabHeader, null, [{
@@ -182,22 +217,25 @@ var Tab = (function () {
     this.template = $templateCache.get('tabs/tab/tab.directive.html');
     this.scope = true;
     this.replace = true;
+
     this.controller = ['$scope', function ($scope) {
-      this.setTitle = function (title) {
-        $scope.title = title;
-      };
+
+      $scope.$on('tab.add', function (event, titleFn) {
+        $scope.$emit('tabs.add', titleFn, function (tab) {
+          $scope.tab = tab;
+        });
+      });
     }];
   }
 
-  _createClass(Tab, [{
-    key: 'link',
-    value: function link(scope, element, attrs, TabsCtrl, transclude) {
+  //link(scope, element, attrs, TabsCtrl, transclude) {
+  //
+  //  TabsCtrl.add(scope.title, function (tab) {
+  //    scope.tab = tab;
+  //  });
+  //}
 
-      TabsCtrl.add(scope.title, function (tab) {
-        scope.tab = tab;
-      });
-    }
-  }], [{
+  _createClass(Tab, null, [{
     key: 'createInstance',
     value: function createInstance($templateCache) {
       Tab.instance = new Tab($templateCache);
@@ -236,43 +274,30 @@ var Tabs = (function () {
     };
     this.replace = true;
     this.controller = ['$scope', function ($scope) {
-      console.log('tabs init');
-      $scope.tabs = [];
+      console.log('tabs init', $scope.active);
+      $scope.tabsBar = [];
       $scope.active = $scope.active || 0;
 
-      this.add = function (title, callback) {
-        var index = $scope.tabs.length;
+      $scope.$on('tabs.add', function (event, titleFn, callback) {
+
+        var index = $scope.tabsBar.length;
         var item = {
-          title: title,
-          active: index == $scope.active,
-          index: index
+          title: titleFn,
+          active: function active() {
+            return index == $scope.active;
+          }
         };
-        $scope.tabs.push(item);
+        $scope.tabsBar.push(item);
         callback(item);
-      };
+      });
 
       $scope.open = function (newIndex) {
-        var oldIndex = $scope.active;
-        $scope.tabs[oldIndex].active = false;
-        $scope.tabs[newIndex].active = true;
         $scope.active = newIndex;
       };
     }];
   }
 
-  _createClass(Tabs, [{
-    key: 'link',
-    value: function link(scope, element, attrs, TabsCtrl, transclude) {
-
-      scope.onInit({
-        tabs: scope.tabs,
-        active: scope.active,
-        count: scope.tabs.length - 1,
-        open: scope.open,
-        close: scope.add
-      });
-    }
-  }], [{
+  _createClass(Tabs, null, [{
     key: 'createInstance',
     value: function createInstance($templateCache, $compile) {
       Tabs.instance = new Tabs($templateCache, $compile);
