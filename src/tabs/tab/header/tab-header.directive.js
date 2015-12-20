@@ -7,6 +7,10 @@ class TabHeader {
       title: '='
     };
     this.controller = ['$scope', function ($scope) {
+
+      /**
+       * Init add tab title to bar
+       */
       $scope.$emit('tab.add', function(){
         return $scope.title;
       });

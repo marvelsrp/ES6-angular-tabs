@@ -9,6 +9,9 @@ class Tab {
 
     this.controller = ['$scope', function ($scope) {
 
+      /**
+       * Proxy from tabHeader to Tabs
+       */
       $scope.$on('tab.add', function (event, titleFn) {
         $scope.$emit('tabs.add', titleFn, function(tab){
           $scope.tab = tab;

@@ -8,9 +8,10 @@
                 <label>Active Tab:</label> {{active}} {{tabs[active].title}}
             </div>
             <div class="form-group">
-                <label>Change Active Tab:</label>
-                <select ng-model="active"
+                <label>Open Tab:</label>
+                <select ng-model="controls.open.form.index"
                         ng-options="tab.index as tab.title for tab in tabs"></select>
+                <button ng-click="controls.open.open()">Open</button>
             </div>
             <div class="form-group">
                 <label>Change Title and Content:</label>
@@ -47,7 +48,11 @@
         </div>
     </div>
     <div class="form-group">
-        <tabs active="active" on-change-tab="onChangeTab" on-add="onAdd" on-remove="onRemove">
+        <tabs active="active"
+              on-init="onInit"
+              on-change-tab="onChangeTab"
+              on-add="onAdd"
+              on-remove="onRemove">
             <tab ng-repeat="tab in tabs">
                 <tab-header title="tab.title"></tab-header>
                 <tab-content ng-bind-html="tab.content"></tab-content>
