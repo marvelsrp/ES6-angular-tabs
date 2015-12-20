@@ -4,7 +4,7 @@ import {Tab}        from './tab/tab.directive.js';
 import {TabHeader}  from './tab/header/tab-header.directive.js';
 import {TabContent} from './tab/content/tab-content.directive.js';
 
-angular.module('fTabs')
+angular.module('tabsView')
   .directive('tabs', Tabs.createInstance)
   .directive('tab', Tab.createInstance)
   .directive('tabHeader', TabHeader.createInstance)
