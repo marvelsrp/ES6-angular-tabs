@@ -1,3 +1,4 @@
+/*jslint es6: true */
 import {Tabs}       from './tabs.directive.js';
 
 describe('Tabs', function() {

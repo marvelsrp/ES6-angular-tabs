@@ -1,3 +1,4 @@
+/*jslint es6: true */
 class Tab {
   constructor($templateCache) {
     this.restrict = 'E';

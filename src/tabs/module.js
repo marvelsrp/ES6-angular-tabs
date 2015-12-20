@@ -1,3 +1,4 @@
+/*jslint es6: true */
 import {Tabs}       from './tabs.directive.js';
 import {Tab}        from './tab/tab.directive.js';
 import {TabHeader}  from './tab/header/tab-header.directive.js';

@@ -1,3 +1,4 @@
+/*jslint es6: true */
 class MainController {
   constructor($scope, $http, $sce, $log) {
     $scope.title = 'ES6 Angular Tabs';

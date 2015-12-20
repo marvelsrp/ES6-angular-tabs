@@ -1,3 +1,4 @@
+/*jslint es6: true */
 class TabHeader {
   constructor() {
     this.restrict = 'E';
