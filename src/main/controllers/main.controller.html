@@ -5,18 +5,18 @@
     <div class="controls">
         <div class="col50">
             <div class="form-group">
-                <label>Active Tab:</label> {{active}} {{tabs[active].title}}
+                <label>Active Tab:</label> {{tabs[active].title}}
             </div>
             <div class="form-group">
                 <label>Open Tab:</label>
                 <select ng-model="controls.open.form.index"
-                        ng-options="tab.index as tab.title for tab in tabs"></select>
+                        ng-options="index as tab.title for (index, tab) in tabs"></select>
                 <button ng-click="controls.open.open()">Open</button>
             </div>
             <div class="form-group">
                 <label>Change Title and Content:</label>
                 <select ng-model="controls.change.form.index"
-                        ng-options="tab.index as tab.title for tab in tabs"></select>
+                        ng-options="index as tab.title for (index, tab) in tabs"></select>
                 <button ng-click="controls.change.get()">Get</button>
                     <input type="text" class="form-control"
                            placeholder="Title"
@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label>Remove Tab:</label>
                 <select ng-model="controls.remove.form.index"
-                        ng-options="tab.index as tab.title for tab in tabs"></select>
+                        ng-options="index as tab.title for (index, tab) in tabs"></select>
                 <button ng-click="controls.remove.remove()">Remove</button>
             </div>
 

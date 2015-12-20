@@ -13,11 +13,13 @@ class Tabs {
     };
     this.replace = true;
     this.controller = ['$scope', function ($scope) {
+
       /**
        * Array of tabs in bar
        * @type {Array}
        */
       $scope.tabsBar = [];
+
       /**
        * Active tab. Linked with controller.active
        * @type {number}
@@ -29,8 +31,6 @@ class Tabs {
        */
       $scope.$on('tabs.add', function (event, titleFn, tabCallback) {
 
-        var index = $scope.tabsBar.length;
-
         /**
          * Tab Object.
          * titleFn linked with read title from controller.
@@ -38,11 +38,9 @@ class Tabs {
          */
         let tabBar = {
           title: titleFn,
-          index: index,
-          active: function () {
-            return index == $scope.active;
-          }
+          active: $scope.tabsBar.length == $scope.active
         };
+
         $scope.tabsBar.push(tabBar);
         tabCallback(tabBar);
         if (typeof $scope.onAdd == 'function') {
@@ -60,6 +58,9 @@ class Tabs {
         var oldIndex = $scope.active;
         $scope.active = newIndex;
 
+        $scope.tabsBar[oldIndex].active = false;
+        $scope.tabsBar[newIndex].active = true;
+
         if (typeof $scope.onChangeTab == 'function') {
           $scope.onChangeTab($scope.tabsBar[newIndex], $scope.tabsBar[oldIndex]);
         }
@@ -76,7 +77,7 @@ class Tabs {
        * Remove tab callback for controller
        * @param index
        */
-      let removeFn = function(index){
+      let removeFn = function (index) {
         if (typeof scope.onRemove == 'function') {
           scope.onRemove(scope.tabsBar[index]);
         }

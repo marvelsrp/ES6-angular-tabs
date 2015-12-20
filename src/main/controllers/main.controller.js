@@ -24,19 +24,18 @@ class MainController {
       url: '/mock/main/controllers/main.controller.mock.json'
     }).then(function successCallback(response) {
       for (let i = 0; i < response.data.length; i++) {
-        $scope.tabs[i] = {
-          index: i,
+        $scope.tabs.push({
           title: response.data[i].title,
           content: $sce.trustAsHtml(response.data[i].content)
-        }
+        });
       }
     });
 
     /**
      * Tabs callbacks
-     * @param tabsBar Array of tabs
-     * @param openFn Callback for open tab
-     * @param removeFn Callback for remove tab
+     * @param tabsBar
+     * @param openFn
+     * @param removeFn
      */
     $scope.onInit = function (tabsBar, openFn, removeFn) {
       $scope.directiveCallback = removeFn;
@@ -44,12 +43,15 @@ class MainController {
       $scope.controls.remove.directiveCallback = removeFn;
       $log.info('Init', tabsBar);
     };
+
     $scope.onChangeTab = function (newTab, oldTab) {
       $log.info('Change tab from ', oldTab.title(), ' to ', newTab.title());
     };
+
     $scope.onAdd = function (newTab) {
       $log.info('Add new tab', newTab.title());
     };
+
     $scope.onRemove = function (removeTab) {
       $log.info('Remove tab', removeTab.title());
     };
@@ -61,21 +63,13 @@ class MainController {
     $scope.controls = {};
 
     /**
-     * Return first index
-     * @returns {Number}
-     */
-    $scope.controls.getAllowActive = function () {
-      return $scope.tabs[0].index;
-    };
-
-    /**
      * Action for reset controls data after remove tab
      */
     $scope.controls.resetAll = function () {
       this.add.reset();
       this.change.reset();
       this.remove.reset();
-      $scope.active = this.getAllowActive();
+      $scope.active = 0;
     };
 
     /**
@@ -89,7 +83,7 @@ class MainController {
       },
       reset: function () {
         this.form = {
-          index: $scope.controls.getAllowActive()
+          index: 0
         };
       },
       open: function () {
@@ -117,12 +111,11 @@ class MainController {
         };
       },
       add: function () {
-        let index = $scope.tabs.length;
-        $scope.tabs[index] = {
-          index: index,
+        $scope.tabs.push({
           title: this.form.title,
           content: $sce.trustAsHtml(this.form.content)
-        }
+        });
+        this.reset();
       }
     };
 
@@ -138,7 +131,7 @@ class MainController {
       },
       reset: function () {
         this.form = {
-          index: $scope.controls.getAllowActive(),
+          index: 0,
           title: null,
           content: null
         };
@@ -150,6 +143,7 @@ class MainController {
       save: function () {
         $scope.tabs[this.form.index].title = this.form.title;
         $scope.tabs[this.form.index].content = $sce.trustAsHtml(this.form.content);
+        this.reset();
       }
     };
 
@@ -164,13 +158,13 @@ class MainController {
       },
       reset: function () {
         this.form = {
-          index: $scope.controls.getAllowActive()
+          index: 0
         }
       },
       remove: function () {
         if (typeof this.directiveCallback == 'function') {
           this.directiveCallback(this.form.index);
-          $scope.tabs.splice(index, 1);
+          $scope.tabs.splice(this.form.index, 1);
           $scope.controls.resetAll();
         } else {
           $log.error('Undefined remove tab callback');
