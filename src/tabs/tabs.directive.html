@@ -3,7 +3,7 @@
         <li ng-repeat="tab in tabsBar track by $index"
             ng-click="open(tab.index)"
             ng-class="{ 'active': tab.active()}">
-            {{tab.title()}}
+            <span class="text-wrapper">{{tab.title()}}</span>
         </li>
     </ul>
     <ng-transclude></ng-transclude>

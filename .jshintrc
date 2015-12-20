@@ -10,6 +10,8 @@
   "browser": true,
   "unused": true,
   "devel": true,
+  "esnext": true,
+  "esversion": 6,
   "globals": {
     "describe": false,
       "xdescribe": false,
